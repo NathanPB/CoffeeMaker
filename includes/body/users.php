@@ -39,15 +39,12 @@
     }
 
     $users = $db->query("select * from user order by createdAt")->fetchAll();
+
+    if($message){?>
+        <div class="alert <?= $message_class ?> alert-dismissable"><?= $message ?></div>
+    <?php }
 ?>
 
-<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css" rel="stylesheet">
-
-<?php
-
-        if($message){?>
-            <div class="alert <?= $message_class ?> alert-dismissable"><?= $message ?></div>
-        <?php } ?>
 
 <table class="table table-striped table-hover">
     <thead>
