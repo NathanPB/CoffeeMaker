@@ -21,7 +21,7 @@
 
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="?page=ingredients">
                                 <span class="fas fa-utensil-spoon"></span> Ingredients
                             </a>
                         </li>
@@ -61,7 +61,7 @@
                 <div class="card h-100 w-100">
                     <?php
                         switch ($_GET['page']) {
-                            case 'ingredientes': include 'includes/body/ingredients.php'; break;
+                            case 'ingredients': include 'includes/body/ingredients.php'; break;
                             case 'recipes': include 'includes/body/recipes.php'; break;
                             case 'users': include 'includes/body/users.php'; break;
                             default: include 'includes/body/overview.php'; break;
