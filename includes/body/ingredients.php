@@ -21,11 +21,13 @@ if(isset($_POST['action'])){
             break;
         }
         case 'delete': {
-            if(isset($_POST['usr'])){
+            if(isset($_POST['id']) && isset($_POST['name'])){
                 try {
                     $statement = $db->prepare("delete from ingredient where id = :id");
-                    $statement->execute($_POST);
-                    $message = "Ingredient {$_POST['usr']} deleted successfully!";
+                    $statement->execute(array(
+                            'id' => $_POST['id']
+                    ));
+                    $message = "Ingredient {$_POST['name']} deleted successfully!";
                 } catch (Exception $ex) {
                     $message_class = 'alert-danger';
                     $message = 'An error occurred on deleting the ingredient. Please contact the system administrator';
@@ -45,19 +47,21 @@ if($message){?>
 ?>
 
 
-<form method="post" class="m-1" action>
+<form method="post" class="pl-2 pr-2" style="overflow-x: hidden" action>
     <input name="action" value="create" hidden/>
     <div class="row">
-        <div class="col-md-6">
-            <input type="text" name="name" placeholder="Ingredient Name" class="form-control" required/>
+        <div class="col-md-6 pt-1">
+            <label for="input-create-name" class="d-sm-none" style="display: block">Ingredient Name:</label>
+            <input type="text" name="name" placeholder="Ingredient Name" class="form-control" id="input-create-name" required/>
         </div>
-        <div class="col-md-4">
-            <select class="form-control" name="type">
+        <div class="col-md-4 pt-1">
+            <label for="input-create-type" class="d-sm-none" style="display: block">Ingredient Name:</label>
+            <select class="form-control pt-1" id="input-create-type" name="type">
                 <option value="0">Solid</option>
                 <option value="1">Liquid</option>
             </select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 pt-1 pb-1">
             <button
                 type="submit"
                 class="btn btn-success w-100"
@@ -87,6 +91,7 @@ if($message){?>
                 <form class="form-delete" method="post">
                     <input name="action" value="delete" hidden/>
                     <input name="id" value="<?= $ingredient['id'] ?>" hidden/>
+                    <input name="name" value="<?= $ingredient['name'] ?>" hidden/>
                     <button
                         type="submit"
                         class="btn btn-danger w-100"
