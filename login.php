@@ -66,7 +66,7 @@
                             flex-grow: 1;
                         }
 
-                        #pwd .input-group-addon-btn {
+                        #pwd {
                             padding: 0;
 
                             button {
