@@ -19,6 +19,22 @@ if(isset($_POST['action'])){
             }
             break;
         }
+        case 'edit': {
+            if(isset($_POST['id']) && isset($_POST['name'])){
+                try {
+                    $statement = $db->prepare("update recipe set name = :name where id = :id");
+                    $statement->execute(array(
+                        'id' => $_POST['id'],
+                        'name' => $_POST['name']
+                    ));
+                    $message = "Recipe renamed successfully!";
+                } catch (Exception $ex) {
+                    $message_class = 'alert-danger';
+                    $message = 'An error occurred on renaming the recipe. Please contact the system administrator';
+                }
+            }
+            break;
+        }
         case 'delete': {
             if(isset($_POST['id']) && isset($_POST['name'])){
                 try {
@@ -118,6 +134,9 @@ if($message){?>
                         <a class="pointer mr-3" data-toggle="collapse" href="#collapse-<?= $recipe['id'] ?>">
                             <span class="fas fa-sort-down"></span>
                         </a>
+                        <button class="btn btn-primary mr-3" data-toggle="modal" data-target="#modal-edit-name" onclick="editName('<?= $recipe['id'] ?>', '<?= $recipe['name'] ?>')" title="Rename">
+                            <span class="fas fa-pencil-alt"></span>
+                        </button>
                         <form class="form-delete" method="post">
                             <input name="action" value="delete" hidden/>
                             <input name="id" value="<?= $recipe['id'] ?>" hidden/>
@@ -205,10 +224,42 @@ if($message){?>
 ?>
 </ul>
 
+<div class="modal" tabindex="-1" role="dialog" id="modal-edit-name">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Rename</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-edit-name" method="post">
+                    <input name="action" value="edit" hidden>
+                    <input type="text" id="input-id-edit-name" value="0" name="id" hidden>
+                    <div class="form-group">
+                        <label for="input-name-edit-name">New Name:</label>
+                        <input type="text" id="input-name-edit-name" name="name" class="form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" form="form-edit-name">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     Array.from(document.querySelectorAll('.form-delete')).forEach(element => {
         element.addEventListener('submit', () => {
             return !confirm(`Please note that this action is unrecoverable.\n Confirm?`);
         });
     });
+
+    function editName(id, name) {
+        document.querySelector('#input-id-edit-name').value = id;
+        document.querySelector('#input-name-edit-name').value = name;
+    }
 </script>
