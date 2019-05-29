@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="web@***REMOVED***" uuid="0e252372-fe96-4d0d-a215-40bdd2cbc46b">
+    <data-source source="LOCAL" name="web@173.249.45.183" uuid="0e252372-fe96-4d0d-a215-40bdd2cbc46b">
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://***REMOVED***:3306/web</jdbc-url>
+      <jdbc-url>jdbc:mariadb://173.249.45.183:3306/web</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
